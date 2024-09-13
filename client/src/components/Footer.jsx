@@ -108,6 +108,12 @@ const Footer = ({ link }) => {
                   >
                     Website Development{' '}
                   </Link>
+                  <Link
+                    to="/services/web"
+                    className={`font-inter font-normal text-[16px] leading-[24px] text-background hover:text-primary  cursor-pointer block`}
+                  >
+                    Egain Activities Search{' '}
+                  </Link>
                 </div>
               </div>
             </div>
