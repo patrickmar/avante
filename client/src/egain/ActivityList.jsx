@@ -31,6 +31,7 @@ const ActivityList = () => {
 
   // Utility function to format dates to ISO strings
   const formatDateToISO = (date) => (date ? new Date(date).toISOString() : "");
+  console.log(activities)
 
   // Handle search button click
   const handleSearch = async () => {
