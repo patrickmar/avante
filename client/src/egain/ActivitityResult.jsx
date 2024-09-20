@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useLocation } from "react-router-dom";
 import * as XLSX from "xlsx";
 
@@ -8,7 +8,17 @@ const ActivitityResult = () => {
     ? location.state.activities
     : [];
 
-  console.log("Activities:", activities);
+  const [currentPage, setCurrentPage] = useState(1); // Current page state
+  const activitiesPerPage = 50; // Number of activities per page (set to 100)
+
+  // Calculate total pages
+  const totalPages = Math.ceil(activities.length / activitiesPerPage);
+
+  // Get current activities for the page
+  const currentActivities = activities.slice(
+    (currentPage - 1) * activitiesPerPage,
+    currentPage * activitiesPerPage
+  );
 
   // Function to handle export to Excel
   const exportToExcel = () => {
@@ -26,8 +36,12 @@ const ActivitityResult = () => {
         "Case ID": activity.case?.id || "-",
         "Queue name": activity.queue?.name || "-",
         "Department name": activity.department?.name || "-",
-        "Reason for last action": activity.status?.activityFolder?.name?.displayValue || "-",
-        "Contact point": `${activity.customer?.customerName || "-"} | ${activity.customer?.contactPersons?.contactPerson[0]?.contactPoints?.contactPoint[0]?.type?.email?.emailAddress || "-"}` // Combined field
+        "Reason for last action":
+          activity.status?.activityFolder?.name?.displayValue || "-",
+        "Contact point": ` ${
+          activity.customer?.contactPersons?.contactPerson[0]?.contactPoints
+            ?.contactPoint[0]?.type?.email?.emailAddress || "-"
+        }`, // Combined field
       }))
     );
 
@@ -38,15 +52,57 @@ const ActivitityResult = () => {
     XLSX.writeFile(workbook, "activities.xlsx");
   };
 
+  // Function to go to the next page
+  const handleNextPage = () => {
+    if (currentPage < totalPages) {
+      setCurrentPage((prev) => prev + 1);
+    }
+  };
+
+  // Function to go to the previous page
+  const handlePrevPage = () => {
+    if (currentPage > 1) {
+      setCurrentPage((prev) => prev - 1);
+    }
+  };
+
   return (
     <div>
       <h1 className="text-xl font-bold ml-12">Activities</h1>
-      <button
-        onClick={exportToExcel}
-        className="bg-[#25aae1] mx-4 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4 "
-      >
-        Export to Excel
-      </button>
+      <div className="flex items-center mb-4 space-x-4 ml-4">
+        <button
+          onClick={exportToExcel}
+          className="bg-[#25aae1] hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        >
+          Export to Excel
+        </button>
+
+        {/* Pagination Buttons */}
+        <div className="flex space-x-4">
+          <button
+            onClick={handlePrevPage}
+            disabled={currentPage === 1}
+            className={`bg-[#25aae1] hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ${
+              currentPage === 1 ? "opacity-50 cursor-not-allowed" : ""
+            }`}
+          >
+            Previous
+          </button>
+          <button
+            onClick={handleNextPage}
+            disabled={currentPage === totalPages}
+            className={`bg-[#25aae1] hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ${
+              currentPage === totalPages ? "opacity-50 cursor-not-allowed" : ""
+            }`}
+          >
+            Next
+          </button>
+          <p className="text-sm text-gray-700">
+            Page {currentPage} of {totalPages}
+          </p>
+        </div>
+      </div>
+
       <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
         <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
           <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -63,31 +119,59 @@ const ActivitityResult = () => {
                   </label>
                 </div>
               </th>
-              <th scope="col" className="px-6 py-3">Mode</th>
-              <th scope="col" className="px-6 py-3">Type</th>
-              <th scope="col" className="px-6 py-3">Activity ID</th>
-              <th scope="col" className="px-6 py-3">Subject</th>
-              <th scope="col" className="px-6 py-3">Assigned to (username)</th>
-              <th scope="col" className="px-6 py-3">Created on</th>
-              <th scope="col" className="px-6 py-3">Due on</th>
-              <th scope="col" className="px-6 py-3">Priority</th>
-              <th scope="col" className="px-6 py-3">Substatus</th>
-              <th scope="col" className="px-6 py-3">Case ID</th>
-              <th scope="col" className="px-6 py-3">Queue name</th>
-              <th scope="col" className="px-6 py-3">Department name</th>
-              <th scope="col" className="px-6 py-3">Reason for last action</th>
-              <th scope="col" className="px-6 py-3">Contact point</th>
+              <th scope="col" className="px-6 py-3">
+                Mode
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Type
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Activity ID
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Subject
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Assigned to (username)
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Created on
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Due on
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Priority
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Substatus
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Case ID
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Queue name
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Department name
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Reason for last action
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Contact point
+              </th>
             </tr>
           </thead>
           <tbody>
-            {activities.length === 0 ? (
+            {currentActivities.length === 0 ? (
               <tr>
                 <td colSpan="14" className="px-6 py-4 text-center">
                   No activities found.
                 </td>
               </tr>
             ) : (
-              activities.map((activity) => (
+              currentActivities.map((activity) => (
                 <tr
                   key={activity.id}
                   className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
@@ -107,9 +191,7 @@ const ActivitityResult = () => {
                   <td className="px-6 py-4">
                     {activity.status?.assigned?.user?.name || "-"}
                   </td>
-                  <td className="px-6 py-4">
-                    {activity.created?.date || "-"}
-                    </td>
+                  <td className="px-6 py-4">{activity.created?.date || "-"}</td>
                   <td className="px-6 py-4">
                     {activity.lastModified?.date || "-"}
                   </td>
@@ -126,9 +208,9 @@ const ActivitityResult = () => {
                     {activity.status?.activityFolder?.name?.displayValue || "-"}
                   </td>
                   <td className="px-6 py-4">
-                    {activity.customer?.customerName || "-"} | {" "}
-                    {activity.customer?.contactPersons?.contactPerson[0]?.contactPoints?.contactPoint[0]?.type?.email?.emailAddress || "-"}
-
+                    {activity.customer?.contactPersons?.contactPerson[0]
+                      ?.contactPoints?.contactPoint[0]?.type?.email
+                      ?.emailAddress || "-"}
                   </td>
                 </tr>
               ))

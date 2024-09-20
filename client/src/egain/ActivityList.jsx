@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { toast } from 'react-hot-toast';
+import { toast } from "react-hot-toast";
 
 const ActivityList = () => {
   const navigate = useNavigate();
-  
+
   // State to manage inputs
   const [operator, setOperator] = useState("=");
   const [startDate, setStartDate] = useState("");
@@ -26,12 +26,13 @@ const ActivityList = () => {
   const handleCustomerIdChange = (e) => setCustomerId(e.target.value);
   const handleActivityTypeChange = (e) => setActivityType(e.target.value);
   const handleQueueIdChange = (e) => setQueueId(e.target.value);
-  const handleSubstatusOperatorChange = (e) => setSubstatusOperator(e.target.value);
+  const handleSubstatusOperatorChange = (e) =>
+    setSubstatusOperator(e.target.value);
   const handleSubstatusChange = (e) => setSubstatus(e.target.value);
 
   // Utility function to format dates to ISO strings
   const formatDateToISO = (date) => (date ? new Date(date).toISOString() : "");
-  console.log(activities)
+  console.log(activities);
 
   // Handle search button click
   const handleSearch = async () => {
@@ -41,7 +42,8 @@ const ActivityList = () => {
     const formattedEndDate = formatDateToISO(endDate);
 
     let query = "";
-    const baseUrl = "https://sterlingbank.egain.cloud/system/ws/v12/interaction/activity?";
+    const baseUrl =
+      "https://sterlingbank.egain.cloud/system/ws/v12/interaction/activity?";
 
     // Handle createdDate and operator filters
     if (startDate || endDate) {
@@ -72,7 +74,7 @@ const ActivityList = () => {
     const pageSize = 25;
 
     // Fetch paginated activities
-    while (morePages && allActivities.length < 1000) {
+    while (morePages && allActivities.length < 5000) {
       const pageUrl = `${url}&$pagesize=${pageSize}&$pagenum=${pageNum}`;
 
       try {
@@ -93,7 +95,7 @@ const ActivityList = () => {
           const activities = Array.isArray(data.activity) ? data.activity : [];
           allActivities = [...allActivities, ...activities];
 
-          if (activities.length < pageSize || allActivities.length >= 1000) {
+          if (activities.length < pageSize || allActivities.length >= 5000) {
             morePages = false;
           } else {
             pageNum += 1;
@@ -115,8 +117,8 @@ const ActivityList = () => {
       }
     }
 
-    if (allActivities.length > 1000) {
-      allActivities = allActivities.slice(0, 1000); // Limit to 1000 results
+    if (allActivities.length > 5000) {
+      allActivities = allActivities.slice(0, 5000); // Limit to 5000 results
     }
 
     setActivities(allActivities); // Set activities state
@@ -159,7 +161,6 @@ const ActivityList = () => {
             </tr>
           </thead>
           <tbody className="bg-white">
-           
             {/* Row for Customer ID */}
             <tr>
               <td className="py-4 px-6 border-b border-gray-200">Activity</td>
@@ -233,7 +234,9 @@ const ActivityList = () => {
                   <option value="between">between</option>
                   <option value="not between">not between</option>
                 </select>
-                <p className="text-xs text-red-500">Can only search with between option</p>
+                <p className="text-xs text-red-500">
+                  Can only search with between option
+                </p>
               </td>
               <td className="py-4 px-6 border-b border-gray-200">
                 <input
@@ -250,7 +253,6 @@ const ActivityList = () => {
                     onChange={handleEndDateChange}
                   />
                 ) : null}
-                
               </td>
             </tr>
             {/* Row for Queue ID */}
