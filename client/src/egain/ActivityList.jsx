@@ -39,32 +39,32 @@ const ActivityList = () => {
     setIsLoading(true); // Show loading state
 
     const formattedStartDate = formatDateToISO(startDate);
-    const formattedEndDate = formatDateToISO(endDate);
 
     let query = "";
     const baseUrl =
       "https://sterlingbank.egain.cloud/system/ws/v12/interaction/activity?";
 
-    // Handle createdDate and operator filters
-    if (startDate || endDate) {
-      if (operator === "between") {
-        query += `createdDate=[${formattedStartDate},${formattedEndDate}]`;
-      } else if (operator === "not between") {
-        query += `createdDate!=[${formattedStartDate},${formattedEndDate}]`;
-      } else if (startDate) {
-        query += `createdDate${operator}${formattedStartDate}`;
-      }
-    }
-
-    // Build query based on additional filters
-    if (caseId) query += `${query ? "&" : ""}case=${caseId}`;
+    // Build query based on filters
+    if (caseId) query += `case=${caseId}`;
     if (customerId) query += `${query ? "&" : ""}customer=${customerId}`;
     if (queueId) query += `${query ? "&" : ""}queue=${queueId}`;
     if (activityType) query += `${query ? "&" : ""}type=${activityType}`;
-    if (substatus) query += `${query ? "&" : ""}status=${substatus}`;
+
+    // Add substatus to the query
+    if (substatus) {
+      query += `${query ? "&" : ""}status=${substatus}`;
+
+      // If the substatus is one that requires a date field, add the date filter to the query
+      if (
+        ["open", "assigned:in_progress", "completed:done"].includes(substatus)
+      ) {
+        if (formattedStartDate) {
+          query += `&lastModifiedDate=[${formattedStartDate},]`; // Only start date
+        }
+      }
+    }
 
     const url = `${baseUrl}${query}&$sort=createdDate&$attribute=created`;
-
     console.log("Final URL:", url); // Check this URL
 
     const sessionId = localStorage.getItem("egainSession");
@@ -90,8 +90,6 @@ const ActivityList = () => {
 
         if (response.ok) {
           const data = await response.json();
-          console.log("API Response Data:", data); // Debugging log
-
           const activities = Array.isArray(data.activity) ? data.activity : [];
           allActivities = [...allActivities, ...activities];
 
@@ -319,18 +317,8 @@ const ActivityList = () => {
               </td>
               <td className="py-4 px-6 border-b border-gray-200">
                 <select
-                  value={substatusOperator}
-                  onChange={handleSubstatusOperatorChange} // Handle operator change
-                  className="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
-                >
-                  <option value="=">=</option>
-                  <option value="!=">!=</option>
-                </select>
-              </td>
-              <td className="py-4 px-6 border-b border-gray-200">
-                <select
                   value={substatus}
-                  onChange={handleSubstatusChange} // Handle substatus change
+                  onChange={handleSubstatusChange}
                   className="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
                 >
                   <option value="">Select Substatus</option>
@@ -338,10 +326,32 @@ const ActivityList = () => {
                   <option value="assigned:in_progress">
                     Assigned-in Progress
                   </option>
-                  <option value="completed:done">Completed-Done</option>
+                  <option value="completed:done">Completed-done</option>
+                  {/* Add more substatus options if needed */}
                 </select>
               </td>
             </tr>
+            {/* Date fields only shown for relevant substatus */}
+            {(substatus === "open" ||
+              substatus === "assigned:in_progress" ||
+              substatus === "completed:done") && (
+              <tr>
+                <td className="py-4 px-6 border-b border-gray-200">Activity</td>
+                <td className="py-4 px-6 border-b border-gray-200 truncate">
+                  Last Modified Date
+                </td>
+                <td className="py-4 px-6 border-b border-gray-200">
+                  <div className="flex items-center space-x-4">
+                    <input
+                      type="date"
+                      className="block bg-white text-gray-700 py-1 px-2 rounded-full text-xs focus:outline-none"
+                      value={startDate}
+                      onChange={handleStartDateChange}
+                    />
+                  </div>
+                </td>
+              </tr>
+            )}
           </tbody>
         </table>
       </div>

@@ -9,7 +9,7 @@ const ActivitityResult = () => {
     : [];
 
   const [currentPage, setCurrentPage] = useState(1); // Current page state
-  const activitiesPerPage = 50; // Number of activities per page (set to 100)
+  const activitiesPerPage = 500;
 
   // Calculate total pages
   const totalPages = Math.ceil(activities.length / activitiesPerPage);
