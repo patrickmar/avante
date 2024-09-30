@@ -17,6 +17,7 @@ const ActivityList = () => {
   const [queueId, setQueueId] = useState("");
   const [substatus, setSubstatus] = useState("");
   const [activityId, setActivityId] = useState("");
+  console.log(activities);
 
   // Handle input changes
   const handleStartDateChange = (e) => setStartDate(e.target.value);
