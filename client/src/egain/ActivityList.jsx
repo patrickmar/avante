@@ -6,9 +6,9 @@ const ActivityList = () => {
   const navigate = useNavigate();
 
   // State to manage inputs
-  const [operator, setOperator] = useState("=");
   const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
+  const [endDate, setEndDate] = useState(""); // For date range
+  const [operator, setOperator] = useState("="); // Default operator
   const [activities, setActivities] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [caseId, setCaseId] = useState("");
@@ -16,62 +16,139 @@ const ActivityList = () => {
   const [activityType, setActivityType] = useState("");
   const [queueId, setQueueId] = useState("");
   const [substatus, setSubstatus] = useState("");
-  const [substatusOperator, setSubstatusOperator] = useState("=");
+  const [activityId, setActivityId] = useState("");
 
   // Handle input changes
-  const handleOperatorChange = (e) => setOperator(e.target.value);
   const handleStartDateChange = (e) => setStartDate(e.target.value);
   const handleEndDateChange = (e) => setEndDate(e.target.value);
   const handleCaseIdChange = (e) => setCaseId(e.target.value);
   const handleCustomerIdChange = (e) => setCustomerId(e.target.value);
   const handleActivityTypeChange = (e) => setActivityType(e.target.value);
   const handleQueueIdChange = (e) => setQueueId(e.target.value);
-  const handleSubstatusOperatorChange = (e) =>
-    setSubstatusOperator(e.target.value);
   const handleSubstatusChange = (e) => setSubstatus(e.target.value);
+  const handleOperatorChange = (e) => setOperator(e.target.value);
+  const handleActivityIdChange = (e) => setActivityId(e.target.value);
 
   // Utility function to format dates to ISO strings
   const formatDateToISO = (date) => (date ? new Date(date).toISOString() : "");
-  console.log(activities);
 
   // Handle search button click
   const handleSearch = async () => {
     setIsLoading(true); // Show loading state
 
-    const formattedStartDate = formatDateToISO(startDate);
+    const formattedStartDate = formatDateToISO(startDate); // Format the start date
+    const formattedEndDate = formatDateToISO(endDate); // Format the end date
 
     let query = "";
-    const baseUrl =
-      "https://sterlingbank.egain.cloud/system/ws/v12/interaction/activity?";
-
-    // Build query based on filters
-    if (caseId) query += `case=${caseId}`;
-    if (customerId) query += `${query ? "&" : ""}customer=${customerId}`;
-    if (queueId) query += `${query ? "&" : ""}queue=${queueId}`;
-    if (activityType) query += `${query ? "&" : ""}type=${activityType}`;
-
-    // Add substatus to the query
-    if (substatus) {
-      query += `${query ? "&" : ""}status=${substatus}`;
-
-      // If the substatus is one that requires a date field, add the date filter to the query
-      if (
-        ["open", "assigned:in_progress", "completed:done"].includes(substatus)
-      ) {
-        if (formattedStartDate) {
-          query += `&lastModifiedDate=[${formattedStartDate},]`; // Only start date
-        }
-      }
-    }
-
-    const url = `${baseUrl}${query}&$sort=createdDate&$attribute=created`;
-    console.log("Final URL:", url); // Check this URL
-
+    let url = "";
     const sessionId = localStorage.getItem("egainSession");
     let allActivities = [];
     let morePages = true;
     let pageNum = 1;
     const pageSize = 25;
+
+    // Fetch activity by ID
+    if (activityId.trim()) {
+      // Direct lookup for specific activity
+      url = `https://sterlingbank.egain.cloud/system/ws/v12/interaction/activity/${activityId.trim()}`;
+      console.log("Direct lookup URL:", url);
+
+      try {
+        const response = await fetch(url, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+            "Accept-Language": "en-US",
+            "x-egain-session": sessionId || "",
+          },
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          console.log("Direct activity lookup response:", data);
+
+          const activities = Array.isArray(data.activity)
+            ? data.activity
+            : [data.activity];
+          setActivities(activities);
+
+          // Navigate to the results page with the retrieved activities
+          navigate("/egain/activity-result", { state: { activities } });
+        } else {
+          const errorData = await response.json();
+          console.error(
+            "Failed to fetch specific activity:",
+            response.status,
+            errorData
+          );
+          toast.error(
+            `Error fetching activity: ${errorData.message || response.status}`
+          );
+        }
+      } catch (error) {
+        console.error("Error fetching specific activity:", error);
+        toast.error("Error fetching specific activity.");
+      }
+
+      setIsLoading(false);
+      return; // Exit after direct lookup
+    }
+
+    // Base URL for search mode (if no activityId)
+    const baseUrl =
+      "https://sterlingbank.egain.cloud/system/ws/v12/interaction/activity?";
+
+    // Handle substatus-specific filtering
+    if (substatus === "assigned:in_progress" || substatus === "open") {
+      // Format the substatus and apply the correct lastModifiedDate filter
+      query += `status=${substatus}`;
+      if (formattedStartDate) {
+        query += `&lastModifiedDate=[${formattedStartDate},${
+          formattedEndDate || ""
+        }]`;
+      } else {
+        console.error("Start date is required for this substatus.");
+        toast.error("Start date is required for the selected substatus.");
+        setIsLoading(false);
+        return;
+      }
+    } else if (substatus === "done") {
+      // Apply completion date for "completed:done" substatus
+      query += `status=${substatus}`;
+      if (formattedStartDate) {
+        query += `&completionDate=[${formattedStartDate},${
+          formattedEndDate || ""
+        }]`;
+      } else {
+        console.error("Start date is required for completion status.");
+        toast.error("Start date is required for 'completed-done' substatus.");
+        setIsLoading(false);
+        return;
+      }
+    } else {
+      // Handle other substatus and filters normally
+      if (substatus) query += `status=${substatus}`;
+      if (startDate || endDate) {
+        if (operator === "between") {
+          query += `&createdDate=[${formattedStartDate},${formattedEndDate}]`;
+        } else if (operator === "not between") {
+          query += `&createdDate!=[${formattedStartDate},${formattedEndDate}]`;
+        } else if (startDate) {
+          query += `&createdDate${operator}${formattedStartDate}`;
+        }
+      }
+    }
+
+    // Additional filters (caseId, customerId, queueId, activityType)
+    if (caseId) query += `${query ? "&" : ""}case=${caseId}`;
+    if (customerId) query += `${query ? "&" : ""}customer=${customerId}`;
+    if (queueId) query += `${query ? "&" : ""}queue=${queueId}`;
+    if (activityType) query += `${query ? "&" : ""}type=${activityType}`;
+
+    // Final URL construction for search
+    url = `${baseUrl}${query}&$sort=createdDate&$attribute=created`;
+    console.log("Search URL:", url); // Log the final URL to debug
 
     // Fetch paginated activities
     while (morePages && allActivities.length < 5000) {
@@ -90,6 +167,8 @@ const ActivityList = () => {
 
         if (response.ok) {
           const data = await response.json();
+          console.log("API Response Data:", data);
+
           const activities = Array.isArray(data.activity) ? data.activity : [];
           allActivities = [...allActivities, ...activities];
 
@@ -106,11 +185,20 @@ const ActivityList = () => {
             return;
           }
         } else {
-          console.error("Failed to fetch activities:", response.status);
+          const errorData = await response.json();
+          console.error(
+            "Failed to fetch activities:",
+            response.status,
+            errorData
+          );
+          toast.error(
+            `Error fetching activities: ${errorData.message || response.status}`
+          );
           morePages = false;
         }
       } catch (error) {
         console.error("Error fetching activities:", error);
+        toast.error("Error fetching activities.");
         morePages = false;
       }
     }
@@ -159,6 +247,33 @@ const ActivityList = () => {
             </tr>
           </thead>
           <tbody className="bg-white">
+            {/* Row for Activity ID */}
+            <tr>
+              <td className="py-4 px-6 border-b border-gray-200">Activity</td>
+              <td className="py-4 px-6 border-b border-gray-200 truncate">
+                Activity ID
+              </td>
+              <td className="py-4 px-6 border-b border-gray-200">
+                <select
+                  value={operator}
+                  onChange={handleOperatorChange}
+                  className="block appearance-none w-full bg-white border border-gray-400 hover:border-gray-500 px-4 py-2 pr-8 rounded shadow leading-tight focus:outline-none focus:shadow-outline"
+                >
+                  <option value="=">=</option>
+                  <option value="!=">!=</option>
+                </select>
+              </td>
+              <td className="py-4 px-6 border-b border-gray-200">
+                <input
+                  type="text"
+                  className="block w-full bg-white text-gray-700 py-1 px-2 rounded-full text-xs focus:outline-none"
+                  value={activityId}
+                  onChange={handleActivityIdChange}
+                  placeholder="Activity ID"
+                />
+              </td>
+            </tr>
+
             {/* Row for Customer ID */}
             <tr>
               <td className="py-4 px-6 border-b border-gray-200">Activity</td>
@@ -334,7 +449,7 @@ const ActivityList = () => {
             {/* Date fields only shown for relevant substatus */}
             {(substatus === "open" ||
               substatus === "assigned:in_progress" ||
-              substatus === "completed:done") && (
+              substatus === "done") && (
               <tr>
                 <td className="py-4 px-6 border-b border-gray-200">Activity</td>
                 <td className="py-4 px-6 border-b border-gray-200 truncate">
