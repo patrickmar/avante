@@ -9,7 +9,7 @@ const ActivityList = () => {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState(""); // For date range
   const [operator, setOperator] = useState("="); // Default operator
-  const [activities, setActivities] = useState([]);
+  const [setActivities] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [caseId, setCaseId] = useState("");
   const [customerId, setCustomerId] = useState("");
