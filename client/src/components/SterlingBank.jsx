@@ -1,8 +1,9 @@
+import React from "react";
 import { layout } from "../style";
-import union1 from "../images/union1.png";
-import union from "../images/union.png";
+import sterling from "../images/sterling.png";
 import { Link } from "react-router-dom";
-const Union = () => {
+
+const SterlingBank = () => {
   return (
     <section className={` mt-[-250px] flex md:flex-row flex-col sm:py-16 py-6`}>
       <div>
@@ -12,7 +13,7 @@ const Union = () => {
             className={`relative lg:mr-24  md:mr-12 ${layout.sectionImgReverse1} `}
           >
             <img
-              src={union1}
+              src={sterling}
               alt="union"
               className="block lg:w-[60%] md:w-[80%] h-[70%] lg:ml-32 md:ml-62"
             />
@@ -20,7 +21,7 @@ const Union = () => {
         </div>
         <div className="px-8 block md:hidden mx-8 mt-[200px]">
           <div className="block md:hidden">
-            <img src={union} alt="union" />
+            <img src={sterling} alt="union" />
           </div>
         </div>
       </div>
@@ -30,25 +31,25 @@ const Union = () => {
         <h2
           className={`font-inter font-semibold xs:text-[16px] md:mt-[150px] mt-[-40px] text-[16px] text-black sm:leading-[60.8px] leading-[30.8px] w-full mb-2  `}
         >
-          UNION <span className="text-secondary ">BANK</span>{" "}
+          Sterling <span className="text-secondary ">BANK</span>{" "}
           <br className=" " />
+          {/* <span className="text-primary font-Inter font-semibold sm:text-[28px] md:mt-[50px] text-[20px]  sm:leading-[8.8px] leading-[6.8px] w-full mb-2 ">
+                Campaign Management <br className="" />
+                Automation
+              </span> */}
         </h2>
         <p
           className={`font-inter text-justify  font-normal text-black2 text-[14px] leading-[25.8px] lg:max-w-[470px] md:min-w-[300px] mt-5 mb-6`}
         >
-          SAS and Union Bank have determined a roadmap to formulating a
-          partnership to achieve Union Bank’s Digital Transformation vision.
-          This project is the first phase of the roadmap and it is intended to
-          help • Implementation of a world-class analytics & AI platform •
-          Automation and Establishing foundation for Campaign Management
-          solution by performing integrations with EDW and key channels. • Build
-          a consistent and rich data platform, focusing on the quality and
-          completeness of the data. • Enabling marketing team to design and
-          execute marketing campaigns. • Enablement of the Union Bank staff on
-          the usage and best practices of the platform. Avante was hired to
-          provide project management services on this project to ensure all
-          deliverables related to the scope and agreed upon timelines were met
-          and delivered successfully.
+          Sterling Bank “Your one-customer bank” is a full service national
+          commercial bank in Nigeria which has evolved from the nation’s
+          pre-eminent investment banking institution to a fully-fledged
+          commercial bank. Avante Consulting Solutions was selected to deploy an
+          implementation of eGain email to enhance customer communication,
+          improve agent productivity, and provide a seamless and efficient email
+          management solution for Sterling Bank. With the deployment of eGain
+          Mail on the cloud, Sterling Bank Plc is leveraging the scalability,
+          flexibility, and cost-effectiveness offered by cloud technology.
         </p>
         <Link to="/contacts">
           <button className="underline decoration-2 underline-offset-4 decoration-secondary text-secondary">
@@ -60,4 +61,4 @@ const Union = () => {
   );
 };
 
-export default Union;
+export default SterlingBank;
