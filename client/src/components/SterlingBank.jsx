@@ -1,6 +1,6 @@
 import React from "react";
 import { layout } from "../style";
-import sterling from "../images/sterling.png";
+import sterling_logo from "../images/sterling_logo.jpg";
 import { Link } from "react-router-dom";
 
 const SterlingBank = () => {
@@ -13,7 +13,7 @@ const SterlingBank = () => {
             className={`relative lg:mr-24  md:mr-12 ${layout.sectionImgReverse1} `}
           >
             <img
-              src={sterling}
+              src={sterling_logo}
               alt="union"
               className="block lg:w-[60%] md:w-[80%] h-[70%] lg:ml-32 md:ml-62"
             />
@@ -21,7 +21,7 @@ const SterlingBank = () => {
         </div>
         <div className="px-8 block md:hidden mx-8 mt-[200px]">
           <div className="block md:hidden">
-            <img src={sterling} alt="union" />
+            <img src={sterling_logo} alt="union" />
           </div>
         </div>
       </div>
@@ -31,8 +31,7 @@ const SterlingBank = () => {
         <h2
           className={`font-inter font-semibold xs:text-[16px] md:mt-[150px] mt-[-40px] text-[16px] text-black sm:leading-[60.8px] leading-[30.8px] w-full mb-2  `}
         >
-          Sterling <span className="text-secondary ">BANK</span>{" "}
-          <br className=" " />
+          STERLING <span className="">BANK</span> <br className=" " />
           {/* <span className="text-primary font-Inter font-semibold sm:text-[28px] md:mt-[50px] text-[20px]  sm:leading-[8.8px] leading-[6.8px] w-full mb-2 ">
                 Campaign Management <br className="" />
                 Automation

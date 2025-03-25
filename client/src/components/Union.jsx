@@ -30,8 +30,7 @@ const Union = () => {
         <h2
           className={`font-inter font-semibold xs:text-[16px] md:mt-[150px] mt-[-40px] text-[16px] text-black sm:leading-[60.8px] leading-[30.8px] w-full mb-2  `}
         >
-          UNION <span className="text-secondary ">BANK</span>{" "}
-          <br className=" " />
+          UNION <span className=" ">BANK</span> <br className=" " />
         </h2>
         <p
           className={`font-inter text-justify  font-normal text-black2 text-[14px] leading-[25.8px] lg:max-w-[470px] md:min-w-[300px] mt-5 mb-6`}
