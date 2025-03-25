@@ -1,5 +1,5 @@
-import { layout } from '../style';
-import consulting from '../images/consulting.png';
+import { layout } from "../style";
+import consulting from "../images/consulting.png";
 
 const BusinessConsulting = () => {
   return (
@@ -15,7 +15,7 @@ const BusinessConsulting = () => {
               className="w-4 h-4 checked:bg-secondary text-red-500 focus:ring-red-500 disabled:bg-secondary"
               checked
               disabled
-            />{' '}
+            />{" "}
           </li>
           <li className="w-full  border-gray-200 rounded-t-lg dark:border-gray-600 mb-8">
             <input
@@ -25,7 +25,7 @@ const BusinessConsulting = () => {
               name="list-radio"
               className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600  focus:ring-2 dark:bg-grey"
               disabled
-            />{' '}
+            />{" "}
           </li>
           <li className="w-full  border-gray-200 rounded-t-lg dark:border-gray-600 mb-8">
             <input
@@ -35,7 +35,7 @@ const BusinessConsulting = () => {
               name="list-radio"
               className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600  focus:ring-1 dark:bg-grey"
               disabled
-            />{' '}
+            />{" "}
           </li>
           <li className="w-full  border-gray-200 rounded-t-lg dark:border-gray-600 mb-8">
             <input
@@ -45,7 +45,7 @@ const BusinessConsulting = () => {
               name="list-radio"
               className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600  focus:ring-1 dark:bg-grey "
               disabled
-            />{' '}
+            />{" "}
           </li>
           <li className="w-full  border-gray-200 rounded-t-lg dark:border-gray-600 mb-8">
             <input
@@ -55,7 +55,7 @@ const BusinessConsulting = () => {
               name="list-radio"
               className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600  focus:ring-1 dark:bg-grey"
               disabled
-            />{' '}
+            />{" "}
           </li>
           <li className="w-full  border-gray-200 rounded-t-lg dark:border-gray-600 mb-8">
             <input
@@ -65,7 +65,7 @@ const BusinessConsulting = () => {
               name="list-radio"
               className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600  focus:ring-1 dark:bg-grey"
               disabled
-            />{' '}
+            />{" "}
           </li>
         </ul>
         <div className="flex justify-center item-center mt-12">
@@ -87,7 +87,7 @@ const BusinessConsulting = () => {
                 className="w-4 h-4 checked:bg-secondary text-red-500 focus:ring-red-500 disabled:bg-secondary"
                 checked
                 disabled
-              />{' '}
+              />{" "}
             </li>
             <li className="w-full  border-gray-200 rounded-t-lg dark:border-gray-600 mb-8">
               <input
@@ -97,7 +97,7 @@ const BusinessConsulting = () => {
                 name="list-radio"
                 className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600  focus:ring-1 dark:bg-grey"
                 disabled
-              />{' '}
+              />{" "}
             </li>
             <li className="w-full  border-gray-200 rounded-t-lg dark:border-gray-600 mb-8">
               <input
@@ -107,7 +107,7 @@ const BusinessConsulting = () => {
                 name="list-radio"
                 className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600  focus:ring-1 dark:bg-grey"
                 disabled
-              />{' '}
+              />{" "}
             </li>
             <li className="w-full  border-gray-200 rounded-t-lg dark:border-gray-600 mb-8">
               <input
@@ -117,7 +117,7 @@ const BusinessConsulting = () => {
                 name="list-radio"
                 className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600  focus:ring-1 dark:bg-grey"
                 disabled
-              />{' '}
+              />{" "}
             </li>
             <li className="w-full  border-gray-200 rounded-t-lg dark:border-gray-600 mb-8">
               <input
@@ -127,7 +127,7 @@ const BusinessConsulting = () => {
                 name="list-radio"
                 className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600  focus:ring-1 dark:bg-grey"
                 disabled
-              />{' '}
+              />{" "}
             </li>
             <li className="w-full  border-gray-200 rounded-t-lg dark:border-gray-600 mb-8">
               <input
@@ -137,7 +137,7 @@ const BusinessConsulting = () => {
                 name="list-radio"
                 className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600  focus:ring-1 dark:bg-grey"
                 disabled
-              />{' '}
+              />{" "}
             </li>
           </ul>
         </div>
@@ -148,7 +148,7 @@ const BusinessConsulting = () => {
         >
           BUSINESS <span className="text-primary ">CONSULTING</span> <br />
         </h2>
-        <p className="text-primary text-primary font-Inter font-semibold sm:text-[28px] sm:mt-[12px] mt-[-12px] text-[20px] text-black sm:leading-[30.8px] leading-[10.8px] md:p-0 p-4 w-full">
+        <p className=" text-primary font-Inter font-semibold sm:text-[28px] sm:mt-[12px] mt-[-12px] text-[20px]  sm:leading-[30.8px] leading-[10.8px] md:p-0 p-4 w-full">
           Expert Advisory Solutions
         </p>
         <div
@@ -172,7 +172,7 @@ const BusinessConsulting = () => {
               phases from project definition to the final production “go-live”.
             </li>
             <li>
-              {' '}
+              {" "}
               Business and functional design, gap analysis, and transition
               planning
             </li>
