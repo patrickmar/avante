@@ -1,6 +1,6 @@
-import { layout } from '../style';
-import { Link } from 'react-router-dom';
-import united from '../images/united.png';
+import { layout } from "../style";
+import { Link } from "react-router-dom";
+import united from "../images/united.png";
 const United = () => {
   return (
     <section className={`flex md:flex-row flex-col-reverse sm:py-16 py-6`}>
@@ -42,7 +42,7 @@ const United = () => {
         </Link>
       </div>
       <div>
-        <div className="hidden md:block">
+        <div className="hidden md:block w-[547px] h-[200px] mr-32">
           <div
             id="cta10"
             className={`${layout.sectionImg} lg:mx-24 md:mx-12 lg:px-24 md:px-8 px-12 relative`}
@@ -59,7 +59,7 @@ const United = () => {
             <img src={united} alt="united" />
           </div>
         </div>
-      </div>{' '}
+      </div>{" "}
     </section>
   );
 };

@@ -1,18 +1,20 @@
-import { Link } from 'react-router-dom';
-import { layout } from '../style';
-import brokers from '../images/brokers.png';
+import { Link } from "react-router-dom";
+import { layout } from "../style";
+import brokers from "../images/brokers.png";
 const InsuraceBroker = () => {
   return (
     <section
       className={`  mt-[-150px] flex md:flex-row flex-col sm:py-16 py-6`}
     >
       <div>
-        <div className="hidden md:block md:mt-[400px] ">
-          <div className={`relative   ${layout.sectionImgReverse1} `}>
+        <div className="hidden md:block mt-56 ">
+          <div
+            className={`relative w-[447px] h-[200px]  ${layout.sectionImgReverse1} `}
+          >
             <img
               src={brokers}
               alt="brokers"
-              className="w-[488.47px] h-[535.1px] ml-32"
+              className="w-[100%] h-[100%] ml-32"
             />
           </div>
         </div>
@@ -23,10 +25,10 @@ const InsuraceBroker = () => {
         </div>
       </div>
       <div
-        className={`${layout.sectionInfo} mt-[200px] lg:mr-44 md:mr-12 lg:px-8 md:px-4 px-8`}
+        className={`${layout.sectionInfo} mt-[200px] lg:ml-72 md:mr-12 lg:px-8 md:px-4 px-8`}
       >
         <h2
-          className={`font-inter font-semibold xs:text-[16px] md:mt-[200px] mt-[-100px] text-[16px] text-black sm:leading-[60.8px] leading-[30.8px] w-full mb-2  `}
+          className={`font-inter font-semibold xs:text-[16px]  mt-[-100px] text-[16px] text-black sm:leading-[60.8px] leading-[30.8px] w-full mb-2  `}
         >
           STANBIC IBTC INSURANCE BROKER <br />
           {/* <span className="text-primary font-inter font-semibold sm:text-[28px] md:mt-[50px] text-[20px]  sm:leading-[8.8px] leading-[6.8px] w-full mb-2  ">

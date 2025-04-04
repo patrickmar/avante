@@ -1,12 +1,12 @@
-import React from 'react';
-import imagefidelity from '../images/imagefidelity.png';
-import { layout } from '../style';
-import { Link } from 'react-router-dom';
+import React from "react";
+import imagefidelity from "../images/imagefidelity.png";
+import { layout } from "../style";
+import { Link } from "react-router-dom";
 
 const FidelityClient = () => {
   return (
     <section className={`flex md:flex-row flex-col-reverse sm:py-16 py-6 mb-4`}>
-      <div className={`lg:mx-24 md:mx-4 px-8 ${layout.sectionInfo}`}>
+      <div className={`lg:ml-32 md:mx-4 px-8 ${layout.sectionInfo}`}>
         <h2
           className={`font-inter font-semibold xs:text-[20px] mt-[70px] text-[16px] text-black sm:leading-[60.8px] leading-[30.8px] w-full mb-4  `}
         >
@@ -35,7 +35,7 @@ const FidelityClient = () => {
       <div>
         <div className="hidden md:block">
           <div
-            className={`${layout.sectionImg} lg:mx-24 md:mx-8 lg:px-24 md:px-8 relative`}
+            className={`${layout.sectionImg} lg:mx-24 md:mx-8 lg:px-44 md:px-8 relative`}
           >
             <img
               src={imagefidelity}

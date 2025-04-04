@@ -1,6 +1,6 @@
-import { layout } from '../style';
-import pension from '../images/pension.png';
-import { Link } from 'react-router-dom';
+import { layout } from "../style";
+import pension from "../images/pension.png";
+import { Link } from "react-router-dom";
 const Pension = () => {
   return (
     <section className={`flex md:flex-row flex-col-reverse sm:py-16 py-6`}>
@@ -37,15 +37,15 @@ const Pension = () => {
         </Link>
       </div>
       <div>
-        <div className="hidden md:block">
+        <div className="hidden md:block w-[700px] h-[250px] -mt-12">
           <div
             id="cta10"
-            className={`${layout.sectionImg} lg:mx-24 md:mx-8 lg:px-24 px-12 relative`}
+            className={`${layout.sectionImg}  lg:mx-24 md:mx-8 lg:px-24 px-12 relative`}
           >
             <img
               src={pension}
               alt="pension"
-              className=" block -mx-4 w-[100%]   h-[70%] "
+              className=" block -mx-4 w-[100%] h-[100%] "
             />
           </div>
         </div>

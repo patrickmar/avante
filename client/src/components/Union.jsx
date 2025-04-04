@@ -14,7 +14,7 @@ const Union = () => {
             <img
               src={union1}
               alt="union"
-              className="block lg:w-[60%] md:w-[80%] h-[70%] lg:ml-32 md:ml-62"
+              className="block lg:w-[65%] md:w-[80%] h-[70%] lg:ml-44 md:ml-62"
             />
           </div>
         </div>

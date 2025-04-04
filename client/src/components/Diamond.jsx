@@ -1,6 +1,6 @@
-import { layout } from '../style';
-import diamond2 from '../images/diamond2.png';
-import { Link } from 'react-router-dom';
+import { layout } from "../style";
+import diamond2 from "../images/diamond2.png";
+import { Link } from "react-router-dom";
 const Diamond = () => {
   return (
     <section
@@ -26,7 +26,7 @@ const Diamond = () => {
         </div>
       </div>
       <div
-        className={` ${layout.sectionInfo} lg:ml-72 md:ml-24 lg:px-8 md:px-12 px-8`}
+        className={` ${layout.sectionInfo} lg:ml-[390px] md:ml-24 lg:px-8 md:px-12 px-8`}
       >
         <h2
           className={`font-inter font-semibold xs:text-[16px] md:mt-[150px] mt-[-100px] text-[16px] text-black sm:leading-[60.8px] leading-[30.8px] w-full mb-2   `}

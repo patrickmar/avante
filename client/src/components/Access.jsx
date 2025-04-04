@@ -19,7 +19,7 @@ const Access = () => {
           </div>
         </div>
       </div>
-      <div className={`${layout.sectionInfo} lg:ml-56 md:ml-32 px-8`}>
+      <div className={`${layout.sectionInfo} lg:ml-72 md:ml-32 px-8`}>
         <h2
           className={`font-inter font-semibold xs:text-[16px] md:mt-[150px] mt-[-100px] text-[16px] text-black sm:leading-[60.8px] leading-[30.8px] w-full mb-2   `}
         >

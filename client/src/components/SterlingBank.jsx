@@ -15,7 +15,7 @@ const SterlingBank = () => {
             <img
               src={sterling_logo}
               alt="union"
-              className="block lg:w-[60%] md:w-[80%] h-[70%] lg:ml-32 md:ml-62"
+              className="block lg:w-[55%] md:w-[80%] h-[70%] lg:ml-18 md:ml-62"
             />
           </div>
         </div>
@@ -26,7 +26,7 @@ const SterlingBank = () => {
         </div>
       </div>
       <div
-        className={`${layout.sectionInfo} md:mt-[20px] mt-[200px] lg:ml-44 md:ml-12 px-8`}
+        className={`${layout.sectionInfo} md:mt-[20px] mt-[200px] lg:ml-24 md:ml-12 `}
       >
         <h2
           className={`font-inter font-semibold xs:text-[16px] md:mt-[150px] mt-[-40px] text-[16px] text-black sm:leading-[60.8px] leading-[30.8px] w-full mb-2  `}
